@@ -1,8 +1,8 @@
 import Avatar from './avatar';
+import React from 'react';
 import DateFormatter from './date-formatter';
 import CoverImage from './cover-image';
 import Link from 'next/link';
-
 
 type Props = {
 	_id: string;

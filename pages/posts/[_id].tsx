@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import React from 'react';
 import ErrorPage from 'next/error';
 import Container from '../../components/container';
 import PostBody from '../../components/post-body';
@@ -21,9 +22,10 @@ type Props = {
 	preview?: boolean;
 };
 
-export default function Post({ post, morePosts, preview }: Props) {
+export default function Post() {
 	const router = useRouter();
-	const { isLoading, readById, postList } = postStore();
+	const { isLoading, readById, post } = postStore();
+
 	// const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
 	// if (!router.isFallback && !post?._id) {
 	//   return <ErrorPage statusCode={404} />
@@ -37,11 +39,13 @@ export default function Post({ post, morePosts, preview }: Props) {
 	}, [router.query._id]);
 
 	useEffect(() => {
-		console.log('postList', postList);
-	}, [postList]);
+		if (post._id) {
+			console.log('post', post);
+		}
+	}, [post]);
 
 	return (
-		<Layout preview={preview}>
+		<Layout preview={true}>
 			<Container>
 				<Header />
 				{router.isFallback ? (
@@ -74,28 +78,28 @@ type Params = {
 	};
 };
 
-export async function getStaticProps({ params }: Params) {
-	const post = getPostBySlug(params.slug, [
-		'title',
-		'date',
-		'slug',
-		'author',
-		'content',
-		'ogImage',
-		'coverImage',
-		'_id',
-	]);
-	const content = await markdownToHtml(post.content || '');
+// export async function getStaticProps({ params }: Params) {
+// 	const post = getPostBySlug(params.slug, [
+// 		'title',
+// 		'date',
+// 		'slug',
+// 		'author',
+// 		'content',
+// 		'ogImage',
+// 		'coverImage',
+// 		'_id',
+// 	]);
+// 	const content = await markdownToHtml(post.content || '');
 
-	return {
-		props: {
-			post: {
-				...post,
-				content,
-			},
-		},
-	};
-}
+// 	return {
+// 		props: {
+// 			post: {
+// 				...post,
+// 				content,
+// 			},
+// 		},
+// 	};
+// }
 
 // export async function getStaticPaths() {
 // 	const posts = getAllPosts(['slug']);
