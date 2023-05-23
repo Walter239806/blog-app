@@ -3,7 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 const apiClient = axios.create({
-	baseURL: 'http://20.228.195.178:3001',
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Origin-': '*',
